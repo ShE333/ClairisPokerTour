@@ -1,60 +1,72 @@
 import os
 import json
-
-PLAYER_FOLDER = "backend/profiles/"
-
+import player_manager as pm
 
 
-def create_player_file (first_name, last_name):
+
+# Main program
+if __name__ == "__main__":
+    # Check if the player folder exists, if not create it
+    os.makedirs(pm.PLAYER_FOLDER, exist_ok=True)
     
-    # Ensure the player folder exists
-    os.makedirs(PLAYER_FOLDER, exist_ok=True)
-
-    # Create player data
-    player_data = {
-        "prenom": first_name,
-        "nom": last_name,
-        "scores": [0] * 12,
-    }
-
-    # Define the file path
-    player_file_name = f"{first_name}_{last_name}.json"
-    file_path = os.path.join(PLAYER_FOLDER, player_file_name)
-
-    # Check if the file already exists
-    if os.path.exists(file_path):
-        return "Le fichier existe déjà."
-    
-    # Write the player data to a JSON file
-    with open(file_path, "w", encoding="utf-8") as file:
-        json.dump(player_data, file, indent=4)
-
-    return "Le fichier a été créé avec succès."
+    print("\n\n\n\n\n**** Welcome to Clairis Poker Tour Manager! ****\n")
 
 
+    while(True):
+        print("Que voulez vous faire:\n")
+        print("1. Créer un nouveau profile\n")
+        print("2. Afficher un profile existant\n")
+        print("3. Modifier un profile\n")
+        print("4. Supprimer un profile\n")
+        print("5. Afficher le tableau des scores\n")
+        print("6. Quitter\n")
+        choice = input("Entrez votre choix: \n")
 
 
-def modify_player_file(first_name, last_name):
-    # Define the file path
-    player_file_name = f"{first_name}_{last_name}.json"
-    file_path = os.path.join(PLAYER_FOLDER, player_file_name)
+        match choice:
+            case "1": # Créer un profile
 
-    # Check if the file exists
-    if not os.path.exists(file_path):
-        return "Le fichier n'existe pas."
+                pm.create_player_file()
+                
+                print("\n----------------------------------------------\n")
+                continue
 
-    # Read the existing data
-    with open(file_path, "r", encoding="utf-8") as file:
-        player_data = json.load(file)
+            case "2": # Afficher un profile existant
 
-    # Update the scores
-    player_data["scores"] = scores
+                pm.display_player_file()
+                
+                print("\n----------------------------------------------\n")
+                continue
 
-    # Write the updated data back to the file
-    with open(file_path, "w", encoding="utf-8") as file:
-        json.dump(player_data, file, indent=4)
+            case "3": # Modifier un profile
 
-    return "Le fichier a été modifié avec succès."
+                pm.modify_player_file()
+
+                print("\n----------------------------------------------\n")
+                continue
+
+            case "4": # Supprimer un profile
+                
+                pm.delete_player_file()
+                
+                print("\n----------------------------------------------\n")
+                continue
+
+            case "5": # Afficher le tableau des scores
+
+                #pm.display_scoreboard()
+
+                print("\n----------------------------------------------\n")
+                continue
+
+            case "6": # Quitter
+
+                print("\nMerci d'avoir utilisé Clairis Poker Tour Manager!\n")
+                exit()
+
+            case _:
+                print("\nChoix invalide. Veuillez réessayer.\n")
+                print("\n----------------------------------------------\n")
 
 
 
@@ -62,9 +74,8 @@ def modify_player_file(first_name, last_name):
 
 
 
-print("Hello World!")
-first_name = input("Enter your first name: ")
-last_name = input("Enter your last name: ")
-print("Creating player file...")
-create_player_file(first_name, last_name)
+
+
+
+
 
