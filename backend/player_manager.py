@@ -163,7 +163,22 @@ def display_scoreboard():
     # Create the scoreboard table
     scoreboard = pt.PrettyTable()
     
-    scoreboard.field_names = ["Prénom", "Nom", "Tournois n°1", "Tournois n°2", "Tournois n°3", "Tournois n°4", "Tournois n°5", "Tournois n°6", "Tournois n°7", "Tournois n°8", "Tournois n°9", "Tournois n°10", "Tournois n°11", "Tournois n°12"]
+    scoreboard.field_names = ["Prénom",
+                              "Nom", 
+                              "Tournois n°1", 
+                              "Tournois n°2", 
+                              "Tournois n°3", 
+                              "Tournois n°4", 
+                              "Tournois n°5", 
+                              "Tournois n°6", 
+                              "Tournois n°7", 
+                              "Tournois n°8", 
+                              "Tournois n°9", 
+                              "Tournois n°10", 
+                              "Tournois n°11", 
+                              "Tournois n°12",
+                              "Total",
+                              "6 meilleurs scores"]
     
     scoreboard.align["Prénom"] = "l"
     scoreboard.align["Nom"] = "l"
@@ -180,8 +195,11 @@ def display_scoreboard():
     scoreboard.align["Tournois n°10"] = "c"
     scoreboard.align["Tournois n°11"] = "c"
     scoreboard.align["Tournois n°12"] = "c"
+    scoreboard.align["Total"] = "c"
+    scoreboard.align["6 meilleurs scores"] = "c"
     
     scoreboard.title = "Tableau des scores des joueurs"
+
 
     # Fill the scoreboard with player data
     for file in os.listdir(PLAYER_FOLDER):
@@ -204,8 +222,11 @@ def display_scoreboard():
                 score11 = player_data["scores"][10]
                 score12 = player_data["scores"][11]
 
+                total_player = sum(player_data["scores"])
+                bests_6 = 0
 
-                scoreboard.add_row([first_name, last_name, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12], divider=True)
+
+                scoreboard.add_row([first_name, last_name, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, total_player, bests_6], divider=True)
 
     # Print the scoreboard
     print(scoreboard)
