@@ -157,6 +157,16 @@ def delete_player_file():
             return
 
 
+# CALCULATE BEST 6 SCORES
+def best_6_scores(scores):
+    # Sort the scores in descending order
+    sorted_scores = sorted(scores, reverse=True)
+    
+    # Calculate the sum of the best 6 scores
+    best_6_sum = sum(sorted_scores[:6])
+    
+    return best_6_sum
+
 # SCOREBOARD DISPLAY
 def display_scoreboard():
 
@@ -179,7 +189,12 @@ def display_scoreboard():
                               "Tournois n°12",
                               "Total",
                               "6 meilleurs scores"]
-    
+
+
+    # Sort the scoreboard by total score in descending order
+    scoreboard.sortby = "6 meilleurs scores"
+    scoreboard.reversesort = True
+
     scoreboard.align["Prénom"] = "l"
     scoreboard.align["Nom"] = "l"
     
@@ -209,24 +224,17 @@ def display_scoreboard():
                 first_name = player_data["prenom"]
                 last_name = player_data["nom"]
 
-                score1 = player_data["scores"][0]
-                score2 = player_data["scores"][1]
-                score3 = player_data["scores"][2]
-                score4 = player_data["scores"][3]
-                score5 = player_data["scores"][4]
-                score6 = player_data["scores"][5]
-                score7 = player_data["scores"][6]
-                score8 = player_data["scores"][7]
-                score9 = player_data["scores"][8]
-                score10 = player_data["scores"][9]
-                score11 = player_data["scores"][10]
-                score12 = player_data["scores"][11]
+                scores = player_data["scores"]
+                score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12 = scores
 
                 total_player = sum(player_data["scores"])
-                bests_6 = 0
+                bests_6 = best_6_scores(player_data["scores"])
 
 
-                scoreboard.add_row([first_name, last_name, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, total_player, bests_6], divider=True)
+                scoreboard.add_row([first_name, last_name, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12, total_player, bests_6])
+
+                # add divider line between players
+                scoreboard.add_divider()
 
     # Print the scoreboard
     print(scoreboard)
