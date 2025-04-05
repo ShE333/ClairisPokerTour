@@ -3,7 +3,7 @@ import sys
 import json
 import subprocess as sp
 import time
-#import PrettyTable
+import prettytable as pt
 
 
 # CONSTANTS
@@ -158,31 +158,54 @@ def delete_player_file():
 
 
 # SCOREBOARD DISPLAY
-""" def display_scoreboard():
+def display_scoreboard():
 
-    # Get all player files
-    player_files = [f for f in os.listdir(PLAYER_FOLDER) if f.endswith(".json")]
+    # Create the scoreboard table
+    scoreboard = pt.PrettyTable()
+    
+    scoreboard.field_names = ["Prénom", "Nom", "Tournois n°1", "Tournois n°2", "Tournois n°3", "Tournois n°4", "Tournois n°5", "Tournois n°6", "Tournois n°7", "Tournois n°8", "Tournois n°9", "Tournois n°10", "Tournois n°11", "Tournois n°12"]
+    
+    scoreboard.align["Prénom"] = "l"
+    scoreboard.align["Nom"] = "l"
+    
+    scoreboard.align["Tournois n°1"] = "c"
+    scoreboard.align["Tournois n°2"] = "c"
+    scoreboard.align["Tournois n°3"] = "c"
+    scoreboard.align["Tournois n°4"] = "c"
+    scoreboard.align["Tournois n°5"] = "c"
+    scoreboard.align["Tournois n°6"] = "c"
+    scoreboard.align["Tournois n°7"] = "c"
+    scoreboard.align["Tournois n°8"] = "c"
+    scoreboard.align["Tournois n°9"] = "c"
+    scoreboard.align["Tournois n°10"] = "c"
+    scoreboard.align["Tournois n°11"] = "c"
+    scoreboard.align["Tournois n°12"] = "c"
+    
+    scoreboard.title = "Tableau des scores des joueurs"
 
-    # Create a list to store player data
-    player_data_list = []
+    # Fill the scoreboard with player data
+    for file in os.listdir(PLAYER_FOLDER):
+        if file.endswith(".json"):
+            with open(os.path.join(PLAYER_FOLDER, file), "r", encoding="utf-8") as f:
+                player_data = json.load(f)
+                first_name = player_data["prenom"]
+                last_name = player_data["nom"]
 
-    # Read each player file and extract data
-    for file in player_files:
-        file_path = os.path.join(PLAYER_FOLDER, file)
-        with open(file_path, "r", encoding="utf-8") as f:
-            player_data = json.load(f)
-            player_data_list.append(player_data)
+                score1 = player_data["scores"][0]
+                score2 = player_data["scores"][1]
+                score3 = player_data["scores"][2]
+                score4 = player_data["scores"][3]
+                score5 = player_data["scores"][4]
+                score6 = player_data["scores"][5]
+                score7 = player_data["scores"][6]
+                score8 = player_data["scores"][7]
+                score9 = player_data["scores"][8]
+                score10 = player_data["scores"][9]
+                score11 = player_data["scores"][10]
+                score12 = player_data["scores"][11]
 
-    # Sort the players by their scores (sum of scores)
-    sorted_players = sorted(player_data_list, key=lambda x: sum(x["scores"]), reverse=True)
 
-    # Create a PrettyTable object to display the scoreboard
-    table = PrettyTable()
-    table.field_names = ["Nom", "Prénom", "Scores"]
+                scoreboard.add_row([first_name, last_name, score1, score2, score3, score4, score5, score6, score7, score8, score9, score10, score11, score12], divider=True)
 
-    # Add each player's data to the table
-    for player in sorted_players:
-        table.add_row([player["nom"], player["prenom"], player["scores"]])
-
-    print("\nTableau des scores:\n")
-    print(table) """
+    # Print the scoreboard
+    print(scoreboard)

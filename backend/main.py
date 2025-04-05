@@ -19,7 +19,8 @@ if __name__ == "__main__":
         print("3. Modifier un profile\n")
         print("4. Supprimer un profile\n")
         print("5. Afficher le tableau des scores\n")
-        print("6. Quitter\n")
+        print("6. Entrer les scores\n")
+        print("7. Quitter\n")
         choice = input("Entrez votre choix: \n")
 
 
@@ -54,12 +55,20 @@ if __name__ == "__main__":
 
             case "5": # Afficher le tableau des scores
 
-                #pm.display_scoreboard()
+                pm.display_scoreboard()
 
                 print("\n----------------------------------------------\n")
                 continue
+            
+            case "6": # Entrer les scores
 
-            case "6": # Quitter
+                
+
+                print("\n----------------------------------------------\n")
+                continue
+            
+
+            case "7": # Quitter
 
                 print("\nMerci d'avoir utilisé Clairis Poker Tour Manager!\n")
                 exit()
