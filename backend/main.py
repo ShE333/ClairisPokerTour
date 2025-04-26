@@ -62,7 +62,7 @@ if __name__ == "__main__":
             
             case "6": # Entrer les scores
 
-                
+                pm.enter_scores()
 
                 print("\n----------------------------------------------\n")
                 continue

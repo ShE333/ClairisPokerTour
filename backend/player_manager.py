@@ -17,11 +17,17 @@ def create_player_file ():
     os.makedirs(PLAYER_FOLDER, exist_ok=True)
 
     # getting player information
-    print("Entrez les informations du joueur.\n") 
-    first_name = input("Entrez le prénom: \n")
-    last_name = input("Entrez le nom: \n")
+    print("\nEntrez les informations du joueur.\n") 
+    first_name = input("Entrez le prénom: (Appuyez sur ENTR pour annuler)\n")
+    if first_name == "":
+        print("Création du profile annulée.\n")
+        return
+    last_name = input("\nEntrez le nom: (Appuyez sur ENTR pour annuler)\n")
+    if last_name == "":
+        print("Création du profile annulée.\n")
+        return
 
-    print("Création du profile...\n")
+    print("\nCréation du profile...\n")
 
     # Create player data
     player_data = {
@@ -51,7 +57,7 @@ def create_player_file ():
 # PLAYER FILE SELECTOR
 def select_player_file():
 
-    print("Liste des profiles de joueurs disponibles:\n")
+    print("\nListe des profiles de joueurs disponibles:\n")
 
     # List all player files
     nbr_files = 0
@@ -61,10 +67,26 @@ def select_player_file():
             print(f"{nbr_files}. {file}\n")
 
 
-    # Ask for the file number
-    nbr = int(input("Entrez le numéro du fichier voulu: \n"))
-    while(nbr < 1 or nbr > nbr_files) :
-        nbr = input("Numéro de fichier invalide. Veuillez réessayer:\n")
+    # Ask for the file number or press enter to cancel
+    if nbr_files == 0:
+        print("Aucun fichier de joueur trouvé.\n")
+        return
+    
+    if nbr_files == 1:
+        print("Il n'y a qu'un seul fichier de joueur disponible.\n")
+        return os.listdir(PLAYER_FOLDER)[0]
+    
+    else:
+
+        nbr = int(input("Entrez le numéro du fichier voulu: (Entrez 0 (zéro) pour annuler)\n"))
+        if nbr == 0:
+            print("Sélection annulée.\n")
+            return
+        while(nbr < 1 or nbr > nbr_files) :
+            nbr = input("\nNuméro de fichier invalide. Veuillez réessayer:\n")
+
+
+
 
     # Get the selected file name
     selected_file = os.listdir(PLAYER_FOLDER)[nbr - 1]
@@ -78,6 +100,7 @@ def display_player_file():
     file = select_player_file()
     file_path = os.path.join(PLAYER_FOLDER, file)
 
+    print("\n")
     print(f"Affichage du fichier: {file_path}\n")
     
     # Display player data
@@ -89,6 +112,7 @@ def display_player_file():
 
 def display_player_file_wpath(file_path):
 
+    print("\n")
     print(f"Affichage du fichier: {file_path}\n")
     
     # Display player data
@@ -175,43 +199,43 @@ def display_scoreboard():
     
     scoreboard.field_names = ["Prénom",
                               "Nom", 
-                              "Tournois n°1", 
-                              "Tournois n°2", 
-                              "Tournois n°3", 
-                              "Tournois n°4", 
-                              "Tournois n°5", 
-                              "Tournois n°6", 
-                              "Tournois n°7", 
-                              "Tournois n°8", 
-                              "Tournois n°9", 
-                              "Tournois n°10", 
-                              "Tournois n°11", 
-                              "Tournois n°12",
+                              "Tour 1", 
+                              "Tour 2", 
+                              "Tour 3", 
+                              "Tour 4", 
+                              "Tour 5", 
+                              "Tour 6", 
+                              "Tour 7", 
+                              "Tour 8", 
+                              "Tour 9", 
+                              "Tour 10", 
+                              "Tour 11", 
+                              "Tour 12",
                               "Total",
-                              "6 meilleurs scores"]
+                              "6 Bests"]
 
 
     # Sort the scoreboard by total score in descending order
-    scoreboard.sortby = "6 meilleurs scores"
+    scoreboard.sortby = "6 Bests"
     scoreboard.reversesort = True
 
     scoreboard.align["Prénom"] = "l"
     scoreboard.align["Nom"] = "l"
     
-    scoreboard.align["Tournois n°1"] = "c"
-    scoreboard.align["Tournois n°2"] = "c"
-    scoreboard.align["Tournois n°3"] = "c"
-    scoreboard.align["Tournois n°4"] = "c"
-    scoreboard.align["Tournois n°5"] = "c"
-    scoreboard.align["Tournois n°6"] = "c"
-    scoreboard.align["Tournois n°7"] = "c"
-    scoreboard.align["Tournois n°8"] = "c"
-    scoreboard.align["Tournois n°9"] = "c"
-    scoreboard.align["Tournois n°10"] = "c"
-    scoreboard.align["Tournois n°11"] = "c"
-    scoreboard.align["Tournois n°12"] = "c"
+    scoreboard.align["Tour 1"] = "c"
+    scoreboard.align["Tour 2"] = "c"
+    scoreboard.align["Tour 3"] = "c"
+    scoreboard.align["Tour 4"] = "c"
+    scoreboard.align["Tour 5"] = "c"
+    scoreboard.align["Tour 6"] = "c"
+    scoreboard.align["Tour 7"] = "c"
+    scoreboard.align["Tour 8"] = "c"
+    scoreboard.align["Tour 9"] = "c"
+    scoreboard.align["Tour 10"] = "c"
+    scoreboard.align["Tour 11"] = "c"
+    scoreboard.align["Tour 12"] = "c"
     scoreboard.align["Total"] = "c"
-    scoreboard.align["6 meilleurs scores"] = "c"
+    scoreboard.align["6 Bests"] = "c"
     
     scoreboard.title = "Tableau des scores des joueurs"
 
@@ -238,3 +262,46 @@ def display_scoreboard():
 
     # Print the scoreboard
     print(scoreboard)
+
+
+# SCORE ENTRY
+def enter_scores():
+
+    print("\n")
+    tournament_dates = [
+        "26/04/2025", "10/05/2025", "07/06/2025", "12/07/2025",
+        "30/08/2025", "13/09/2025", "25/10/2025", "08/11/2025",
+        "20/12/2025", "17/01/2026", "28/02/2026", "14/03/2026"
+    ]
+
+
+    for i, date in enumerate(tournament_dates, start=1):
+        print(f" {i}. {date}")
+    
+
+    selected_date = int(input("\nSélectionnez la date du tournoi:\n"))
+
+    # Iterate over all player files to modify the score corresponding to the selected date
+    for file in os.listdir(PLAYER_FOLDER):
+        if file.endswith(".json"):
+            file_path = os.path.join(PLAYER_FOLDER, file)
+
+            # Display the player data before modification
+            print("\n")
+            display_player_file_wpath(file_path)
+
+            # Open the player file to modify the score
+            with open(file_path, "r+", encoding="utf-8") as f:
+                player_data = json.load(f)
+                print("\nEntrez le score du joueur:\n")
+                score = int(input(f"Score pour {player_data['prenom']} {player_data['nom']}:\n"))
+
+                # Update the score for the selected tournament
+                player_data["scores"][selected_date - 1] = score
+
+                # Write the updated data back to the file
+                f.seek(0)  # Move the cursor to the beginning of the file
+                json.dump(player_data, f, indent=4, ensure_ascii=False)
+                f.truncate()  # Remove any leftover data from the old file
+
+
